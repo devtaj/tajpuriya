@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact & Feedback - Cultural Community</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo"><img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img"></a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" data-i18n="home">Home</a></li>
+                <li><a href="/about" data-i18n="about">About</a></li>
+                <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                <li><a href="/members" data-i18n="members">Members</a></li>
+                <li><a href="/events" data-i18n="events">Events</a></li>
+                <li><a href="/contact" class="active" data-i18n="contact">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button id="lang-btn" class="btn btn-outline" onclick="toggleLang()">EN</button>
+                <a href="/login" class="btn btn-outline" data-i18n="login">Login</a>
+                <a href="/register" class="btn btn-solid" data-i18n="join">Join</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1 class="section-title" data-i18n="contactFeedback">Contact & Feedback</h1>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="getInTouch">Get in Touch</h3>
+                        <p class="card-text" data-i18n="getInTouchDesc">
+                            We'd love to hear from you! Whether you have questions, suggestions, or want to 
+                            share your thoughts about our community, please don't hesitate to reach out.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="communitySupport">Community Support</h3>
+                        <p class="card-text" data-i18n="communitySupportDesc">
+                            Our community administrators are here to help with membership queries, event information, 
+                            and any assistance you might need.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="sendMessage">Send us a Message</h2>
+            
+            <div class="form-container">
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name" data-i18n="fullName">Full Name *</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" data-i18n="emailAddress">Email Address *</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="type" data-i18n="messageType">Message Type</label>
+                        <select id="type" name="type" class="form-control">
+                            <option value="contact" data-i18n="generalContact">General Contact</option>
+                            <option value="feedback" data-i18n="feedback">Feedback</option>
+                            <option value="suggestion" data-i18n="suggestion">Suggestion</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" data-i18n="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" data-i18n="message">Message *</label>
+                        <textarea id="message" name="message" class="form-control" rows="6" required 
+                                  data-i18n-placeholder="messagePlaceholder" placeholder="Please share your thoughts, questions, or suggestions..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" data-i18n="sendMessageBtn" style="width: 100%; padding: 1rem;">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="otherWaysConnect">Other Ways to Connect</h2>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="communityEvents">Community Events</h3>
+                        <p class="card-text" data-i18n="culturalProgramsDesc">
+                            Join our regular community events and gatherings to meet fellow members and 
+                            participate in cultural activities.
+                        </p>
+                        <a href="/events" class="btn btn-primary" data-i18n="viewEvents">View Events</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="memberDirectory">Member Directory</h3>
+                        <p class="card-text" data-i18n="communityMembersDesc">
+                            Connect with other community members through our member directory and build 
+                            lasting relationships.
+                        </p>
+                        <a href="/members" class="btn btn-primary" data-i18n="browseMembers">Browse Members</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="culturalPrograms">Cultural Programs</h3>
+                        <p class="card-text" data-i18n="culturalHeritageDesc">
+                            Participate in our cultural programs and help preserve our traditions for 
+                            future generations.
+                        </p>
+                        <a href="/culture" class="btn btn-primary" data-i18n="exploreCulture">Explore Culture</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="faq">Frequently Asked Questions</h2>
+            
+            <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div style="margin-bottom: 2rem;">
+                    <h4 data-i18n="faqQ1" style="color: var(--primary-color); margin-bottom: 0.5rem;">How can I become a member?</h4>
+                    <p data-i18n="faqA1">You can register for membership through our registration page. Your application will be reviewed by our administrators and you'll be notified once approved.</p>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h4 data-i18n="faqQ2" style="color: var(--primary-color); margin-bottom: 0.5rem;">How do I stay updated about events?</h4>
+                    <p data-i18n="faqA2">Once you become a member, you'll receive notifications about upcoming events. You can also check our events page regularly for updates.</p>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h4 data-i18n="faqQ3" style="color: var(--primary-color); margin-bottom: 0.5rem;">Can I contribute content to the website?</h4>
+                    <p data-i18n="faqA3">Yes! We welcome contributions from community members. Please contact us with your ideas for articles, photos, or other content you'd like to share.</p>
+                </div>
+                
+                <div>
+                    <h4 data-i18n="faqQ4" style="color: var(--primary-color); margin-bottom: 0.5rem;">How can I organize a community event?</h4>
+                    <p data-i18n="faqA4">If you have an idea for a community event, please reach out to us through this contact form. Our administrators will work with you to plan and organize the event.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section pattern-bg" style="padding: 3rem; border-radius: 15px; text-align: center;">
+            <h2 class="section-title" data-i18n="joinOurCommunityTitle" style="color: white;">Join Our Community</h2>
+            <p data-i18n="joinCommunityReady" style="color: white; font-size: 1.2rem; margin-bottom: 2rem;">
+                Ready to be part of our cultural community? Register today and connect with fellow members.
+            </p>
+            <a href="/register" class="btn btn-primary" data-i18n="registerNow" style="font-size: 1.1rem; padding: 1rem 2rem;">Register Now</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/culture">Culture</a>
+                <a href="/members">Members</a>
+                <a href="/events">Events</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <p>&copy; 2024 Cultural Community. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/i18n-data.js"></script>
+    <script src="/js/translations.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+function toggleMobileMenu() {
+    const navMenu = document.getElementById('nav-menu');
+    navMenu.classList.toggle('active');
+}
+
+// Handle placeholder translation
+document.addEventListener('DOMContentLoaded', () => {
+    const messageTextarea = document.getElementById('message');
+    if (messageTextarea) {
+        const updatePlaceholder = () => {
+            const key = messageTextarea.getAttribute('data-i18n-placeholder');
+            if (key && translationData[i18n.currentLang][key]) {
+                messageTextarea.placeholder = translationData[i18n.currentLang][key];
+            }
+        };
+        updatePlaceholder();
+        const originalToggle = window.toggleLang;
+        window.toggleLang = function() {
+            originalToggle();
+            updatePlaceholder();
+        };
+    }
+});
+    </script>
+</body>
+</html>

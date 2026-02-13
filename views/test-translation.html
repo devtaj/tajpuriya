@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Test</title>
+</head>
+<body>
+    <h1 data-i18n="home">Home</h1>
+    <button id="lang-btn" onclick="toggleLang()">EN</button>
+    
+    <script src="/js/i18n-data.js"></script>
+    <script src="/js/translations.js"></script>
+    <script>
+        console.log('Current language:', i18n.currentLang);
+        console.log('Translation data:', translationData);
+        console.log('localStorage lang:', localStorage.getItem('lang'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cultural Community</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo"><img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img"></a>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/culture">Culture</a></li>
+                <li><a href="/members">Members</a></li>
+                <li><a href="/events">Events</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="/register" class="btn btn-primary">Join Us</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1 class="section-title">Member Login</h1>
+            
+            <div class="form-container">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; margin-bottom: 1rem;">
+                        Login
+                    </button>
+                </form>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p>Don't have an account? <a href="/register" style="color: var(--primary-color); text-decoration: none;">Register here</a></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">Member Benefits</h3>
+                        <ul style="list-style-type: none; padding: 0;">
+                            <li style="margin-bottom: 0.5rem;">✓ Access to member directory</li>
+                            <li style="margin-bottom: 0.5rem;">✓ Event notifications</li>
+                            <li style="margin-bottom: 0.5rem;">✓ Cultural resources</li>
+                            <li style="margin-bottom: 0.5rem;">✓ Community networking</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">Need Help?</h3>
+                        <p class="card-text">
+                            If you're having trouble logging in or need assistance with your account, 
+                            please contact our administrators.
+                        </p>
+                        <a href="/contact" class="btn btn-secondary">Contact Support</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/culture">Culture</a>
+                <a href="/members">Members</a>
+                <a href="/events">Events</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <p>&copy; 2024 Cultural Community. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

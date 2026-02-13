@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Cultural Community</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo"><img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img"></a>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/culture">Culture</a></li>
+                <li><a href="/members">Members</a></li>
+                <li><a href="/events">Events</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <span>Admin Panel</span>
+                <button class="btn btn-secondary" onclick="app.logout()">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1 class="section-title">Admin Dashboard</h1>
+            
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-members">0</div>
+                    <div class="stat-label">Total Members</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pending-members">0</div>
+                    <div class="stat-label">Pending Approvals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-events">0</div>
+                    <div class="stat-label">Total Events</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-posts">0</div>
+                    <div class="stat-label">Published Posts</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Pending Member Approvals</h2>
+            <div id="pending-members" class="member-grid">
+                <div class="spinner"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Quick Actions</h2>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">Create Event</h3>
+                        <p class="card-text">Add new community events, announcements, or festival information.</p>
+                        <button class="btn btn-primary" onclick="showCreateEventForm()">Create Event</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">Add Article</h3>
+                        <p class="card-text">Publish cultural articles, blog posts, or community news.</p>
+                        <button class="btn btn-primary" onclick="showCreatePostForm()">Add Article</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">View Messages</h3>
+                        <p class="card-text">Review contact form submissions and community feedback.</p>
+                        <button class="btn btn-primary" onclick="loadMessages()">View Messages</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Create Event Modal -->
+        <div id="event-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('event-modal')">&times;</span>
+                <h2>Create New Event</h2>
+                <form id="create-event-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="event-title">Event Title *</label>
+                        <input type="text" id="event-title" name="title" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="event-description">Description *</label>
+                        <textarea id="event-description" name="description" class="form-control" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="event-date">Date *</label>
+                        <input type="date" id="event-date" name="date" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="event-time">Time *</label>
+                        <input type="time" id="event-time" name="time" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="event-location">Location *</label>
+                        <input type="text" id="event-location" name="location" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="event-type">Type</label>
+                        <select id="event-type" name="type" class="form-control">
+                            <option value="event">Event</option>
+                            <option value="announcement">Announcement</option>
+                            <option value="festival">Festival</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="event-image">Event Image</label>
+                        <input type="file" id="event-image" name="image" class="form-control" accept="image/*">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Create Event</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Create Post Modal -->
+        <div id="post-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('post-modal')">&times;</span>
+                <h2>Create New Article</h2>
+                <form id="create-post-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="post-title">Article Title *</label>
+                        <input type="text" id="post-title" name="title" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="post-excerpt">Excerpt *</label>
+                        <textarea id="post-excerpt" name="excerpt" class="form-control" rows="2" required 
+                                  placeholder="Brief summary of the article (max 200 characters)"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="post-content">Content *</label>
+                        <textarea id="post-content" name="content" class="form-control" rows="8" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="post-category">Category</label>
+                        <select id="post-category" name="category" class="form-control" required>
+                            <option value="history">History</option>
+                            <option value="culture">Culture</option>
+                            <option value="tradition">Tradition</option>
+                            <option value="festival">Festival</option>
+                            <option value="food">Food</option>
+                            <option value="language">Language</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="post-image">Featured Image</label>
+                        <input type="file" id="post-image" name="image" class="form-control" accept="image/*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="isPublished" value="true" checked>
+                            Publish immediately
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Create Article</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Messages Modal -->
+        <div id="messages-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('messages-modal')">&times;</span>
+                <h2>Contact Messages</h2>
+                <div id="messages-container">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/culture">Culture</a>
+                <a href="/members">Members</a>
+                <a href="/events">Events</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <p>&copy; 2024 Cultural Community. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+    <script>
+        // Modal functionality
+        function showCreateEventForm() {
+            document.getElementById('event-modal').style.display = 'block';
+        }
+
+        function showCreatePostForm() {
+            document.getElementById('post-modal').style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Load admin statistics
+        async function loadAdminStats() {
+            try {
+                const [membersRes, eventsRes, postsRes] = await Promise.all([
+                    fetch('/api/members'),
+                    fetch('/api/events'),
+                    fetch('/api/posts')
+                ]);
+
+                const members = await membersRes.json();
+                const events = await eventsRes.json();
+                const posts = await postsRes.json();
+
+                document.getElementById('total-members').textContent = members.length;
+                document.getElementById('total-events').textContent = events.length;
+                document.getElementById('total-posts').textContent = posts.length;
+
+                // Load pending members count
+                const pendingRes = await fetch('/api/members/admin/pending');
+                const pending = await pendingRes.json();
+                document.getElementById('pending-members').textContent = pending.length;
+            } catch (error) {
+                console.error('Error loading admin stats:', error);
+            }
+        }
+
+        // Load messages
+        async function loadMessages() {
+            try {
+                const response = await fetch('/api/posts/admin/contacts');
+                const messages = await response.json();
+                
+                const container = document.getElementById('messages-container');
+                container.innerHTML = messages.map(msg => `
+                    <div class="card" style="margin-bottom: 1rem;">
+                        <div class="card-content">
+                            <h4>${msg.subject}</h4>
+                            <p><strong>From:</strong> ${msg.name} (${msg.email})</p>
+                            <p><strong>Type:</strong> ${msg.type}</p>
+                            <p><strong>Date:</strong> ${new Date(msg.createdAt).toLocaleDateString()}</p>
+                            <p>${msg.message}</p>
+                        </div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('messages-modal').style.display = 'block';
+            } catch (error) {
+                console.error('Error loading messages:', error);
+            }
+        }
+
+        // Form submissions
+        document.getElementById('create-event-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch('/api/events', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    app.showAlert('Event created successfully!', 'success');
+                    closeModal('event-modal');
+                    e.target.reset();
+                    loadAdminStats();
+                } else {
+                    app.showAlert('Failed to create event', 'error');
+                }
+            } catch (error) {
+                app.showAlert('Error creating event', 'error');
+            }
+        });
+
+        document.getElementById('create-post-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch('/api/posts', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    app.showAlert('Article created successfully!', 'success');
+                    closeModal('post-modal');
+                    e.target.reset();
+                    loadAdminStats();
+                } else {
+                    app.showAlert('Failed to create article', 'error');
+                }
+            } catch (error) {
+                app.showAlert('Error creating article', 'error');
+            }
+        });
+
+        // Initialize admin dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAdminStats();
+        });
+    </script>
+
+    <style>
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+    </style>
+</body>
+</html>

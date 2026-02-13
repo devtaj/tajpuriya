@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Community - Home</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                <img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img">
+            </a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" class="active" data-i18n="home">Home</a></li>
+                <li><a href="/about" data-i18n="about">About</a></li>
+                <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                <li><a href="/members" data-i18n="members">Members</a></li>
+                <li><a href="/events" data-i18n="events">Events</a></li>
+                <li><a href="/contact" data-i18n="contact">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button id="lang-btn" class="btn btn-outline" onclick="toggleLang()">EN</button>
+                <a href="/login" class="btn btn-outline" data-i18n="login">Login</a>
+                <a href="/register" class="btn btn-solid" data-i18n="join">Join</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="hero-section">
+        <div class="hero-content">
+            <h1 data-i18n="heroTitle">Welcome to Our Tajpuriya Cultural Heritage</h1>
+            <p data-i18n="heroSubtitle">Preserving traditions, connecting communities, and celebrating our rich cultural legacy for future generations.</p>
+            <a href="/about" class="btn btn-primary" data-i18n="learnMore">Learn More</a>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="section">
+            <h2 class="section-title" data-i18n="ourCommunity">Our Community</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="richHistory">Rich History</h3>
+                        <p class="card-text" data-i18n="richHistoryDesc">Discover the fascinating history and origins of our community, spanning centuries of cultural evolution and traditions.</p>
+                        <a href="/about" class="btn btn-primary" data-i18n="exploreHistory">Explore History</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="culturalHeritage">Cultural Heritage</h3>
+                        <p class="card-text" data-i18n="culturalHeritageDesc">Experience our vibrant festivals, traditional arts, cuisine, and customs that define our unique cultural identity.</p>
+                        <a href="/culture" class="btn btn-primary" data-i18n="viewCulture">View Culture</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="communityMembers">Community Members</h3>
+                        <p class="card-text" data-i18n="communityMembersDesc">Connect with fellow community members from around the world and build lasting relationships.</p>
+                        <a href="/members" class="btn btn-primary" data-i18n="meetMembers">Meet Members</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="upcomingEvents">Upcoming Events</h2>
+            <div id="upcoming-events">
+                <div class="spinner"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="latestArticles">Latest Articles</h2>
+            <div id="latest-posts">
+                <div class="spinner"></div>
+            </div>
+        </section>
+
+        <section class="section pattern-bg" style="padding: 4rem 2rem; border-radius: 12px; text-align: center;">
+            <h2 class="section-title" data-i18n="joinCommunity" style="color: white;">Join Our Community</h2>
+            <p data-i18n="joinCommunityDesc" style="color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 2rem;">
+                Become part of our growing community and help preserve our cultural heritage for future generations.
+            </p>
+            <a href="/register" class="btn btn-primary" data-i18n="registerNow" style="background: white; color: var(--text-dark);">Register Now</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3 data-i18n="about">About</h3>
+                    <p data-i18n="footerAboutDesc">Preserving our cultural heritage and connecting community members worldwide.</p>
+                    <p data-i18n="footerConnectDesc" style="margin-top: 1rem;">Join our community and stay updated with events and news.</p>
+                    <a href="/register" class="btn btn-outline" data-i18n="join" style="margin-top: 1rem; display: inline-block; color: white; border-color: white;">Join</a>
+                </div>
+                <div class="footer-section">
+                    <h3 data-i18n="footerQuickLinks">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about" data-i18n="about">About</a></li>
+                        <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                        <li><a href="/members" data-i18n="members">Members</a></li>
+                        <li><a href="/events" data-i18n="events">Events</a></li>
+                        <li><a href="/contact" data-i18n="contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 <span data-i18n="footerRights">Tajpuriya Samaj. All rights reserved.</span></p>
+                <p><span data-i18n="footerDeveloper">Developed by</span> <a href="https://devtajpuriya.com.np/" target="_blank">Dev Tajpuriya</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/i18n-data.js"></script>
+    <script src="/js/translations.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+function toggleMobileMenu() {
+    const navMenu = document.getElementById('nav-menu');
+    navMenu.classList.toggle('active');
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/api/events?upcoming=true');
+        const events = await response.json();
+        const container = document.getElementById('upcoming-events');
+        
+        if (events.length > 0) {
+            container.innerHTML = events.slice(0, 3).map(event => {
+                const eventDate = new Date(event.date);
+                return `
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="event-day">${eventDate.getDate()}</div>
+                            <div class="event-month">${eventDate.toLocaleDateString('en', { month: 'short' })}</div>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">${event.title}</h3>
+                            <p class="event-info"><strong>Time:</strong> ${event.time}</p>
+                            <p class="event-info"><strong>Location:</strong> ${event.location}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        } else {
+            container.innerHTML = '<p>No upcoming events at the moment.</p>';
+        }
+    } catch (error) {
+        document.getElementById('upcoming-events').innerHTML = '<p>Unable to load events.</p>';
+    }
+
+    try {
+        const response = await fetch('/api/posts');
+        const posts = await response.json();
+        const container = document.getElementById('latest-posts');
+        
+        if (posts.length > 0) {
+            container.innerHTML = '<div class="card-grid">' + 
+                posts.slice(0, 3).map(post => `
+                    <div class="card">
+                        ${post.image ? `<img src="${post.image}" alt="${post.title}" class="card-image">` : ''}
+                        <div class="card-content">
+                            <h3 class="card-title">${post.title}</h3>
+                            <p class="card-text">${post.excerpt}</p>
+                            <small>By ${post.author.name}</small>
+                        </div>
+                    </div>
+                `).join('') + '</div>';
+        } else {
+            container.innerHTML = '<p>No articles available at the moment.</p>';
+        }
+    } catch (error) {
+        document.getElementById('latest-posts').innerHTML = '<p>Unable to load articles.</p>';
+    }
+});
+    </script>
+</body>
+</html>

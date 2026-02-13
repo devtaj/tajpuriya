@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture & Gallery - Cultural Community</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                <img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img">
+            </a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" data-i18n="home">Home</a></li>
+                <li><a href="/about" data-i18n="about">About</a></li>
+                <li><a href="/culture" class="active" data-i18n="culture">Culture</a></li>
+                <li><a href="/members" data-i18n="members">Members</a></li>
+                <li><a href="/events" data-i18n="events">Events</a></li>
+                <li><a href="/contact" data-i18n="contact">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button id="lang-btn" class="btn btn-outline" onclick="toggleLang()">EN</button>
+                <a href="/login" class="btn btn-outline" data-i18n="login">Login</a>
+                <a href="/register" class="btn btn-solid" data-i18n="join">Join</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1 class="section-title" data-i18n="ourCulturalHeritage">Our Cultural Heritage</h1>
+            
+            <div class="search-filter">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="category-filter" data-i18n="categoryLabel">Category:</label>
+                        <select id="category-filter" class="form-control filter-select">
+                            <option value="" data-i18n="allCategories">All Categories</option>
+                            <option value="history" data-i18n="history">History</option>
+                            <option value="culture" data-i18n="culture">Culture</option>
+                            <option value="tradition" data-i18n="tradition">Tradition</option>
+                            <option value="festival" data-i18n="festival">Festival</option>
+                            <option value="food" data-i18n="food">Food</option>
+                            <option value="language" data-i18n="language">Language</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="festivalsCelebrations">Festivals & Celebrations</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="traditionalFestivals">Traditional Festivals</h3>
+                        <p class="card-text" data-i18n="traditionalFestivalsDesc">
+                            Our community celebrates various traditional festivals throughout the year, each with its own 
+                            significance and rituals. These celebrations bring families and communities together, 
+                            strengthening our cultural bonds.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="religiousObservances">Religious Observances</h3>
+                        <p class="card-text" data-i18n="religiousObservancesDesc">
+                            Religious festivals and observances play an important role in our cultural calendar. 
+                            These events are marked by special prayers, community gatherings, and traditional ceremonies.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="seasonalCelebrations">Seasonal Celebrations</h3>
+                        <p class="card-text" data-i18n="seasonalCelebrationsDesc">
+                            We celebrate the changing seasons with special festivals that honor nature and agricultural cycles. 
+                            These celebrations reflect our deep connection to the natural world.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="traditionalArtsCrafts">Traditional Arts & Crafts</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="textileArts">Textile Arts</h3>
+                        <p class="card-text" data-i18n="textileArtsDesc">
+                            Our community has a rich tradition of textile arts including weaving, embroidery, and dyeing. 
+                            These skills have been passed down through generations and continue to be practiced today.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="musicDance">Music & Dance</h3>
+                        <p class="card-text" data-i18n="musicDanceDesc">
+                            Traditional music and dance forms are an integral part of our cultural expression. 
+                            These art forms are performed during festivals, weddings, and other celebrations.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="handicrafts">Handicrafts</h3>
+                        <p class="card-text" data-i18n="handicraftsDesc">
+                            Various handicrafts including pottery, woodwork, and metalwork showcase the artistic 
+                            skills of our community members and reflect our cultural aesthetics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="traditionalCuisine">Traditional Cuisine</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="festiveFoods">Festive Foods</h3>
+                        <p class="card-text" data-i18n="festiveFoodsDesc">
+                            Special dishes prepared during festivals and celebrations hold deep cultural significance. 
+                            These recipes have been preserved and passed down through generations.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="dailyCuisine">Daily Cuisine</h3>
+                        <p class="card-text" data-i18n="dailyCuisineDesc">
+                            Our everyday cuisine reflects the agricultural practices and local ingredients of our regions. 
+                            Traditional cooking methods and spices create unique flavors.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="ceremonialFoods">Ceremonial Foods</h3>
+                        <p class="card-text" data-i18n="ceremonialFoodsDesc">
+                            Specific foods are prepared for religious ceremonies and life events such as births, 
+                            marriages, and other important milestones in our community.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="famousPersonalities">Famous Personalities</h2>
+            <div id="posts-container">
+                <div class="spinner"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="photoGallery">Photo Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="/images/bbanner.jpg" alt="Community">
+                    <div class="gallery-overlay">
+                        <h4 data-i18n="galleryCommunity">Community</h4>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="/images/tajpuriyasamaj01.jpg" alt="Cultural Heritage">
+                    <div class="gallery-overlay">
+                        <h4 data-i18n="culturalHeritage">Cultural Heritage</h4>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="/images/tajpuriyasamaj02.jpg" alt="Traditions">
+                    <div class="gallery-overlay">
+                        <h4 data-i18n="galleryTraditions">Traditions</h4>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="/images/tajpuriyasamaj03.jpg" alt="Festivals">
+                    <div class="gallery-overlay">
+                        <h4 data-i18n="galleryFestivals">Festivals</h4>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="/images/tajpuriyasamaj04.jpg" alt="Community Events">
+                    <div class="gallery-overlay">
+                        <h4 data-i18n="galleryCommunityEvents">Community Events</h4>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="/images/tajpuriyasamaj05.jpg" alt="Cultural Programs">
+                    <div class="gallery-overlay">
+                        <h4 data-i18n="galleryCulturalPrograms">Cultural Programs</h4>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="/images/tajpuriyasamaj08.jpg" alt="Celebrations">
+                    <div class="gallery-overlay">
+                        <h4 data-i18n="galleryCelebrations">Celebrations</h4>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="/images/tajpuriyasamaj09.jpg" alt="Heritage">
+                    <div class="gallery-overlay">
+                        <h4 data-i18n="galleryHeritage">Heritage</h4>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <video src="/images/tajpuriyasamaj06.mp4" controls style="width: 100%; height: 100%; object-fit: cover;"></video>
+                </div>
+                <div class="gallery-item">
+                    <video src="/images/tajpuriyasamaj07.mp4" controls style="width: 100%; height: 100%; object-fit: cover;"></video>
+                </div>
+            </div>
+        </section>
+
+        <section class="section pattern-bg" style="padding: 3rem; border-radius: 15px; text-align: center;">
+            <h2 class="section-title" data-i18n="preserveOurCulture" style="color: white;">Preserve Our Culture</h2>
+            <p data-i18n="preserveCultureDesc" style="color: white; font-size: 1.2rem; margin-bottom: 2rem;">
+                Help us document and preserve our rich cultural heritage for future generations.
+            </p>
+            <a href="/contact" class="btn btn-primary" data-i18n="shareYourStory" style="font-size: 1.1rem; padding: 1rem 2rem;">Share Your Story</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/culture">Culture</a>
+                <a href="/members">Members</a>
+                <a href="/events">Events</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <p>&copy; 2024 Cultural Community. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/i18n-data.js"></script>
+    <script src="/js/translations.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+function toggleMobileMenu() {
+    const navMenu = document.getElementById('nav-menu');
+    navMenu.classList.toggle('active');
+}
+    </script>
+</body>
+</html>

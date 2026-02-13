@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members Directory - Cultural Community</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo"><img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img"></a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" data-i18n="home">Home</a></li>
+                <li><a href="/about" data-i18n="about">About</a></li>
+                <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                <li><a href="/members" class="active" data-i18n="members">Members</a></li>
+                <li><a href="/events" data-i18n="events">Events</a></li>
+                <li><a href="/contact" data-i18n="contact">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button id="lang-btn" class="btn btn-outline" onclick="toggleLang()">EN</button>
+                <a href="/login" class="btn btn-outline" data-i18n="login">Login</a>
+                <a href="/register" class="btn btn-solid" data-i18n="join">Join</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1 class="section-title" data-i18n="membersDirectory">Members Directory</h1>
+            
+            <div class="search-filter">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="search" data-i18n="searchMembers">Search Members:</label>
+                        <input type="text" id="search" class="form-control" data-i18n-placeholder="searchPlaceholder" placeholder="Search by name or profession...">
+                    </div>
+                    <div class="filter-group">
+                        <label for="profession-filter" data-i18n="professionLabel">Profession:</label>
+                        <select id="profession-filter" class="form-control filter-select">
+                            <option value="" data-i18n="allProfessions">All Professions</option>
+                            <option value="doctor" data-i18n="doctor">Doctor</option>
+                            <option value="engineer" data-i18n="engineer">Engineer</option>
+                            <option value="teacher" data-i18n="teacher">Teacher</option>
+                            <option value="business" data-i18n="business">Business</option>
+                            <option value="lawyer" data-i18n="lawyer">Lawyer</option>
+                            <option value="student" data-i18n="student">Student</option>
+                            <option value="other" data-i18n="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="city-filter" data-i18n="cityLabel">City:</label>
+                        <select id="city-filter" class="form-control filter-select">
+                            <option value="" data-i18n="allCities">All Cities</option>
+                            <option value="mumbai" data-i18n="mumbai">Mumbai</option>
+                            <option value="delhi" data-i18n="delhi">Delhi</option>
+                            <option value="bangalore" data-i18n="bangalore">Bangalore</option>
+                            <option value="pune" data-i18n="pune">Pune</option>
+                            <option value="hyderabad" data-i18n="hyderabad">Hyderabad</option>
+                            <option value="chennai" data-i18n="chennai">Chennai</option>
+                            <option value="kolkata" data-i18n="kolkata">Kolkata</option>
+                            <option value="other" data-i18n="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div id="members-container" class="member-grid">
+                <div class="spinner"></div>
+            </div>
+        </section>
+
+        <section class="section pattern-bg" style="padding: 3rem; border-radius: 15px; text-align: center;">
+            <h2 class="section-title" data-i18n="joinOurCommunityTitle" style="color: white;">Join Our Community</h2>
+            <p data-i18n="connectWithMembers" style="color: white; font-size: 1.2rem; margin-bottom: 2rem;">
+                Connect with fellow community members and be part of our growing network.
+            </p>
+            <a href="/register" class="btn btn-primary" data-i18n="registerNow" style="font-size: 1.1rem; padding: 1rem 2rem;">Register Now</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/culture">Culture</a>
+                <a href="/members">Members</a>
+                <a href="/events">Events</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <p>&copy; 2024 Cultural Community. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/i18n-data.js"></script>
+    <script src="/js/translations.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+function toggleMobileMenu() {
+    const navMenu = document.getElementById('nav-menu');
+    navMenu.classList.toggle('active');
+}
+
+// Handle placeholder translation
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search');
+    if (searchInput) {
+        const updatePlaceholder = () => {
+            const key = searchInput.getAttribute('data-i18n-placeholder');
+            if (key && translationData[i18n.currentLang][key]) {
+                searchInput.placeholder = translationData[i18n.currentLang][key];
+            }
+        };
+        updatePlaceholder();
+        // Update on language change
+        const originalToggle = window.toggleLang;
+        window.toggleLang = function() {
+            originalToggle();
+            updatePlaceholder();
+        };
+    }
+});
+    </script>
+</body>
+</html>

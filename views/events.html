@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events & Notices - Cultural Community</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo"><img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img"></a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" data-i18n="home">Home</a></li>
+                <li><a href="/about" data-i18n="about">About</a></li>
+                <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                <li><a href="/members" data-i18n="members">Members</a></li>
+                <li><a href="/events" class="active" data-i18n="events">Events</a></li>
+                <li><a href="/contact" data-i18n="contact">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button id="lang-btn" class="btn btn-outline" onclick="toggleLang()">EN</button>
+                <a href="/login" class="btn btn-outline" data-i18n="login">Login</a>
+                <a href="/register" class="btn btn-solid" data-i18n="join">Join</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1 class="section-title" data-i18n="eventsNotices">Events & Notices</h1>
+            
+            <div class="search-filter">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="type-filter" data-i18n="eventTypeLabel">Event Type:</label>
+                        <select id="type-filter" class="form-control filter-select">
+                            <option value="" data-i18n="allTypes">All Types</option>
+                            <option value="event" data-i18n="eventsType">Events</option>
+                            <option value="announcement" data-i18n="announcements">Announcements</option>
+                            <option value="festival" data-i18n="festivals">Festivals</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="upcoming-filter" data-i18n="timeLabel">Time:</label>
+                        <select id="upcoming-filter" class="form-control filter-select">
+                            <option value="" data-i18n="allEvents">All Events</option>
+                            <option value="true" data-i18n="upcomingOnly">Upcoming Only</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="communityEvents">Community Events</h2>
+            <div id="events-container">
+                <div class="spinner"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="eventCategories">Event Categories</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="culturalPrograms">Cultural Programs</h3>
+                        <p class="card-text" data-i18n="culturalProgramsDesc">
+                            Traditional dance performances, music concerts, and cultural shows that celebrate 
+                            our rich heritage and artistic traditions.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="religiousFestivals">Religious Festivals</h3>
+                        <p class="card-text" data-i18n="religiousFestivalsDesc">
+                            Sacred celebrations and religious observances that bring our community together 
+                            in prayer and spiritual reflection.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="educationalSeminars">Educational Seminars</h3>
+                        <p class="card-text" data-i18n="educationalSeminarsDesc">
+                            Knowledge-sharing sessions, workshops, and seminars on various topics including 
+                            history, culture, and modern developments.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="socialGatherings">Social Gatherings</h3>
+                        <p class="card-text" data-i18n="socialGatheringsDesc">
+                            Community meetups, networking events, and social gatherings that strengthen 
+                            bonds between members and families.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="youthPrograms">Youth Programs</h3>
+                        <p class="card-text" data-i18n="youthProgramsDesc">
+                            Special events and activities designed for young community members to learn 
+                            about their heritage and connect with peers.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title" data-i18n="charitableActivities">Charitable Activities</h3>
+                        <p class="card-text" data-i18n="charitableActivitiesDesc">
+                            Community service events, fundraising activities, and charitable initiatives 
+                            to help those in need and give back to society.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="howToParticipate">How to Participate</h2>
+            <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div class="card-grid">
+                    <div style="text-align: center;">
+                        <h4 data-i18n="step1Title" style="color: var(--primary-color); margin-bottom: 1rem;">1. Register</h4>
+                        <p data-i18n="step1Desc">Become a member of our community to receive event notifications and updates.</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h4 data-i18n="step2Title" style="color: var(--primary-color); margin-bottom: 1rem;">2. Stay Updated</h4>
+                        <p data-i18n="step2Desc">Check this page regularly for new events and announcements from the community.</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h4 data-i18n="step3Title" style="color: var(--primary-color); margin-bottom: 1rem;">3. Participate</h4>
+                        <p data-i18n="step3Desc">Attend events, volunteer for activities, and actively participate in community life.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section pattern-bg" style="padding: 3rem; border-radius: 15px; text-align: center;">
+            <h2 class="section-title" data-i18n="organizeEvent" style="color: white;">Organize an Event</h2>
+            <p data-i18n="organizeEventDesc" style="color: white; font-size: 1.2rem; margin-bottom: 2rem;">
+                Have an idea for a community event? Contact our administrators to organize cultural programs and gatherings.
+            </p>
+            <a href="/contact" class="btn btn-primary" data-i18n="contactUs" style="font-size: 1.1rem; padding: 1rem 2rem;">Contact Us</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/culture">Culture</a>
+                <a href="/members">Members</a>
+                <a href="/events">Events</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <p>&copy; 2024 Cultural Community. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/i18n-data.js"></script>
+    <script src="/js/translations.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+function toggleMobileMenu() {
+    const navMenu = document.getElementById('nav-menu');
+    navMenu.classList.toggle('active');
+}
+
+// Custom event filtering
+document.getElementById('upcoming-filter').addEventListener('change', function() {
+    const filters = {};
+    const type = document.getElementById('type-filter').value;
+    const upcoming = this.value;
+    
+    if (type) filters.type = type;
+    if (upcoming) filters.upcoming = upcoming;
+    
+    app.loadEvents(filters);
+});
+    </script>
+</body>
+</html>
