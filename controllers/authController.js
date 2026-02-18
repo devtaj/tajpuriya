@@ -25,13 +25,15 @@ const register = async (req, res) => {
       email,
       password,
       phone,
-      address,
+      address: { street: address?.street || '' },
       profession,
       bio,
       profileImage: req.file ? `/uploads/${req.file.filename}` : ''
     });
 
     await user.save();
+    console.log('✅ User registered successfully:', user.email);
+    console.log('User ID:', user._id);
 
     const token = generateToken(user._id);
     res.cookie('token', token, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
@@ -106,10 +108,97 @@ const updateProfile = async (req, res) => {
   }
 };
 
+// Test endpoint to check all users
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select('-password');
+    res.json({
+      count: users.length,
+      users: users
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Approve user
+const approveUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { isApproved: true },
+      { new: true }
+    ).select('-password');
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    res.json({ message: 'User approved successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Reject user
+const rejectUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    res.json({ message: 'User rejected and deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Delete user (admin)
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Update user (admin)
+const updateUser = async (req, res) => {
+  try {
+    const { name, email, phone, profession, address } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { name, email, phone, profession, address },
+      { new: true }
+    ).select('-password');
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    res.json({ message: 'User updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   register,
   login,
   logout,
   getProfile,
-  updateProfile
+  updateProfile,
+  getAllUsers,
+  approveUser,
+  rejectUser,
+  deleteUser,
+  updateUser
 };

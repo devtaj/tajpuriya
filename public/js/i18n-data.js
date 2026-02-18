@@ -10,6 +10,7 @@ const translationData = {
     contact: "Contact",
     login: "Login",
     join: "Join",
+    articles:"Articles",
     
     // Common
     learnMore: "Learn More",
@@ -224,6 +225,7 @@ const translationData = {
     contact: "सम्पर्क",
     login: "लगइन",
     join: "सामेल हुनुहोस्",
+    articles:"लेखहरू",
     
     // Common
     learnMore: "थप जान्नुहोस्",

@@ -50,6 +50,10 @@ app.get('/contact', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'contact.html'));
 });
 
+app.get('/articles', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'articles.html'));
+});
+
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
@@ -60,6 +64,18 @@ app.get('/register', (req, res) => {
 
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'admin.html'));
+});
+
+app.get('/submit-article', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'submit-article.html'));
+});
+
+app.get('/article/:id', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'article-detail.html'));
+});
+
+app.get('/profile', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'profile.html'));
 });
 
 const PORT = process.env.PORT || 3000;

@@ -26,14 +26,7 @@ class CommunityApp {
   }
 
   updateAuthUI() {
-    const authButtons = document.querySelector('.auth-buttons');
-    if (this.currentUser && authButtons) {
-      authButtons.innerHTML = `
-        <span>Welcome, ${this.currentUser.name}</span>
-        <button class="btn btn-secondary" onclick="app.logout()">Logout</button>
-        ${this.currentUser.role === 'admin' ? '<a href="/admin" class="btn btn-primary">Admin</a>' : ''}
-      `;
-    }
+    // Auth UI is now handled by auth-nav.js
   }
 
   async login(email, password) {
@@ -208,15 +201,29 @@ class CommunityApp {
 
   // Admin Functions
   async loadPendingMembers() {
-    if (!this.currentUser || this.currentUser.role !== 'admin') return;
-
+    console.log('loadPendingMembers called');
     try {
-      const response = await fetch('/api/members/admin/pending');
-      const members = await response.json();
+      console.log('Fetching users from /api/auth/test-users');
+      const response = await fetch('/api/auth/test-users');
+      console.log('Response status:', response.status);
+      const data = await response.json();
+      console.log('Response data:', data);
+      const allUsers = data.users || [];
       
-      this.displayPendingMembers(members);
+      console.log('All users:', allUsers.length);
+      
+      // Filter only pending members (not approved)
+      const pendingMembers = allUsers.filter(user => user.isApproved === false);
+      
+      console.log('Pending members:', pendingMembers.length, pendingMembers);
+      
+      this.displayPendingMembers(pendingMembers);
     } catch (error) {
       console.error('Error loading pending members:', error);
+      const container = document.getElementById('pending-members');
+      if (container) {
+        container.innerHTML = '<p style="text-align: center; padding: 2rem; color: var(--error-color);">Error loading pending members: ' + error.message + '</p>';
+      }
     }
   }
 
@@ -224,30 +231,59 @@ class CommunityApp {
     const container = document.getElementById('pending-members');
     if (!container) return;
 
-    container.innerHTML = members.map(member => `
-      <div class="member-card">
-        <img src="${member.profileImage || '/images/default-avatar.png'}" 
-             alt="${member.name}" class="member-avatar">
-        <h3 class="member-name">${member.name}</h3>
-        <p class="member-profession">${member.profession}</p>
-        <p class="member-email">${member.email}</p>
-        <div class="member-actions">
-          <button class="btn btn-primary" onclick="app.approveMember('${member._id}')">Approve</button>
-          <button class="btn btn-secondary" onclick="app.rejectMember('${member._id}')">Reject</button>
-        </div>
-      </div>
-    `).join('');
+    if (members.length === 0) {
+      container.innerHTML = '<p style="text-align: center; padding: 2rem; color: var(--text-light);">No pending member approvals at this time.</p>';
+      return;
+    }
+
+    container.innerHTML = `
+      <table style="width: 100%; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <thead>
+          <tr style="background: var(--primary-color); color: white;">
+            <th style="padding: 1rem; text-align: left;">Photo</th>
+            <th style="padding: 1rem; text-align: left;">Name</th>
+            <th style="padding: 1rem; text-align: left;">Email</th>
+            <th style="padding: 1rem; text-align: left;">Profession</th>
+            <th style="padding: 1rem; text-align: left;">Phone</th>
+            <th style="padding: 1rem; text-align: center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${members.map(member => `
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem;">
+                <img src="${member.profileImage || '/images/default-avatar.png'}" 
+                     alt="${member.name}" 
+                     style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+              </td>
+              <td style="padding: 1rem; font-weight: 600;">${member.name}</td>
+              <td style="padding: 1rem;">${member.email}</td>
+              <td style="padding: 1rem;">${member.profession}</td>
+              <td style="padding: 1rem;">${member.phone || 'N/A'}</td>
+              <td style="padding: 1rem; text-align: center;">
+                <button class="btn btn-primary" onclick="app.approveMember('${member._id}')" style="margin-right: 0.5rem; padding: 0.5rem 1rem;">Approve</button>
+                <button class="btn btn-secondary" onclick="app.rejectMember('${member._id}')" style="padding: 0.5rem 1rem;">Reject</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
   }
 
   async approveMember(memberId) {
     try {
-      const response = await fetch(`/api/members/admin/approve/${memberId}`, {
+      const response = await fetch(`/api/auth/approve/${memberId}`, {
         method: 'PUT'
       });
 
       if (response.ok) {
         this.showAlert('Member approved successfully!', 'success');
         this.loadPendingMembers();
+        // Refresh stats if on admin page
+        if (typeof loadAdminStats === 'function') {
+          loadAdminStats();
+        }
       }
     } catch (error) {
       this.showAlert('Failed to approve member', 'error');
@@ -258,13 +294,17 @@ class CommunityApp {
     if (!confirm('Are you sure you want to reject this member?')) return;
 
     try {
-      const response = await fetch(`/api/members/admin/reject/${memberId}`, {
+      const response = await fetch(`/api/auth/reject/${memberId}`, {
         method: 'DELETE'
       });
 
       if (response.ok) {
         this.showAlert('Member rejected successfully!', 'success');
         this.loadPendingMembers();
+        // Refresh stats if on admin page
+        if (typeof loadAdminStats === 'function') {
+          loadAdminStats();
+        }
       }
     } catch (error) {
       this.showAlert('Failed to reject member', 'error');

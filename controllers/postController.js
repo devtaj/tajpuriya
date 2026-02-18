@@ -31,7 +31,7 @@ const getPostById = async (req, res) => {
     const post = await Post.findById(req.params.id)
       .populate('author', 'name');
 
-    if (!post || (!post.isPublished && req.user?.role !== 'admin')) {
+    if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
 
@@ -129,6 +129,110 @@ const getContacts = async (req, res) => {
   }
 };
 
+const submitArticle = async (req, res) => {
+  try {
+    const { title, content, excerpt, category } = req.body;
+    
+    if (!req.user) {
+      return res.status(401).json({ message: 'Please login to submit articles' });
+    }
+
+    const post = new Post({
+      title,
+      content,
+      excerpt,
+      category,
+      image: req.file ? `/uploads/${req.file.filename}` : '',
+      author: req.user.id,
+      isPublished: false
+    });
+
+    await post.save();
+    await post.populate('author', 'name email');
+
+    res.status(201).json({ message: 'Article submitted for review', post });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+const getPendingPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({ isPublished: false })
+      .populate('author', 'name email')
+      .sort({ createdAt: -1 });
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const approvePost = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.params.id,
+      { isPublished: true },
+      { new: true }
+    ).populate('author', 'name email');
+    
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    
+    res.json({ message: 'Post approved successfully', post });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const likePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: 'Post not found' });
+    
+    const userId = req.user.id;
+    const likeIndex = post.likes.indexOf(userId);
+    const dislikeIndex = post.dislikes.indexOf(userId);
+    
+    if (dislikeIndex > -1) post.dislikes.splice(dislikeIndex, 1);
+    
+    if (likeIndex > -1) {
+      post.likes.splice(likeIndex, 1);
+    } else {
+      post.likes.push(userId);
+    }
+    
+    await post.save();
+    res.json({ likes: post.likes.length, dislikes: post.dislikes.length });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const dislikePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: 'Post not found' });
+    
+    const userId = req.user.id;
+    const likeIndex = post.likes.indexOf(userId);
+    const dislikeIndex = post.dislikes.indexOf(userId);
+    
+    if (likeIndex > -1) post.likes.splice(likeIndex, 1);
+    
+    if (dislikeIndex > -1) {
+      post.dislikes.splice(dislikeIndex, 1);
+    } else {
+      post.dislikes.push(userId);
+    }
+    
+    await post.save();
+    res.json({ likes: post.likes.length, dislikes: post.dislikes.length });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   getPosts,
   getPostById,
@@ -136,5 +240,10 @@ module.exports = {
   updatePost,
   deletePost,
   submitContact,
-  getContacts
+  getContacts,
+  submitArticle,
+  getPendingPosts,
+  approvePost,
+  likePost,
+  dislikePost
 };

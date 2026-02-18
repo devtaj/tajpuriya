@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article - Tajpuriya Samaj</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/animations.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo"><img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img"></a>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/culture">Culture</a></li>
+                <li><a href="/members">Members</a></li>
+                <li><a href="/events">Events</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <div class="dropdown">
+                    <button class="btn btn-icon dropdown-toggle" onclick="toggleDropdown()">⋮</button>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <a href="/login">Login</a>
+                        <a href="/register">Join</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container" style="margin-top: 6rem;">
+        <div id="article-content" style="max-width: 900px; margin: 0 auto;">
+            <div class="spinner" style="text-align: center; padding: 3rem;">Loading article...</div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/culture">Culture</a>
+                <a href="/members">Members</a>
+                <a href="/events">Events</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <p>&copy; 2024 Tajpuriya Samaj. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/auth-nav.js"></script>
+    <script>
+        const userData = JSON.parse(localStorage.getItem('user') || 'null');
+        const postId = window.location.pathname.split('/').pop();
+
+        function toggleDropdown() {
+            document.getElementById('dropdown-menu').classList.toggle('show');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-toggle')) {
+                const dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (let i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].classList.remove('show');
+                }
+            }
+        }
+
+        async function loadArticle() {
+            try {
+                const response = await fetch(`/api/posts/${postId}`);
+                if (!response.ok) throw new Error('Article not found');
+                
+                const article = await response.json();
+                displayArticle(article);
+            } catch (error) {
+                document.getElementById('article-content').innerHTML = `
+                    <div style="text-align: center; padding: 3rem;">
+                        <h2>Article not found</h2>
+                        <p>The article you're looking for doesn't exist.</p>
+                        <a href="/articles" class="btn btn-primary">Back to Articles</a>
+                    </div>
+                `;
+            }
+        }
+
+        function displayArticle(article) {
+            document.title = article.title + ' - Tajpuriya Samaj';
+            document.getElementById('article-content').innerHTML = `
+                <div style="margin-bottom: 2rem;">
+                    <a href="/articles" style="color: var(--primary-color); text-decoration: none;">&larr; Back to Articles</a>
+                </div>
+                
+                <article style="background: white; padding: 3rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <span style="display: inline-block; padding: 0.4rem 1rem; background: var(--primary-color); color: white; border-radius: 20px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1rem;">
+                        ${article.category}
+                    </span>
+                    
+                    <h1 style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;">${article.title}</h1>
+                    
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border-color);">
+                        <small style="color: var(--text-light);">By ${article.author.name}</small>
+                        <small style="color: var(--text-light);">•</small>
+                        <small style="color: var(--text-light);">${new Date(article.createdAt).toLocaleDateString()}</small>
+                    </div>
+                    
+                    ${article.image ? `<img src="${article.image}" alt="${article.title}" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px; margin-bottom: 2rem;">` : ''}
+                    
+                    <div style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark); white-space: pre-wrap;">
+                        ${article.content}
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
+                        <button onclick="likeArticle()" class="btn btn-outline" style="padding: 0.8rem 1.5rem;" ${!userData ? 'disabled title="Login to like"' : ''}>
+                            👍 Like <span id="likes-count">${article.likes?.length || 0}</span>
+                        </button>
+                        <button onclick="dislikeArticle()" class="btn btn-outline" style="padding: 0.8rem 1.5rem;" ${!userData ? 'disabled title="Login to dislike"' : ''}>
+                            👎 Dislike <span id="dislikes-count">${article.dislikes?.length || 0}</span>
+                        </button>
+                    </div>
+                </article>
+            `;
+        }
+
+        async function likeArticle() {
+            if (!userData) {
+                alert('Please login to like articles');
+                return;
+            }
+            try {
+                const response = await fetch(`/api/posts/${postId}/like`, {
+                    method: 'PUT',
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                document.getElementById('likes-count').textContent = data.likes;
+                document.getElementById('dislikes-count').textContent = data.dislikes;
+            } catch (error) {
+                console.error('Error liking article:', error);
+            }
+        }
+
+        async function dislikeArticle() {
+            if (!userData) {
+                alert('Please login to dislike articles');
+                return;
+            }
+            try {
+                const response = await fetch(`/api/posts/${postId}/dislike`, {
+                    method: 'PUT',
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                document.getElementById('likes-count').textContent = data.likes;
+                document.getElementById('dislikes-count').textContent = data.dislikes;
+            } catch (error) {
+                console.error('Error disliking article:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadArticle);
+    </script>
+</body>
+</html>

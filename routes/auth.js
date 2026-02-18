@@ -8,7 +8,12 @@ const {
   login,
   logout,
   getProfile,
-  updateProfile
+  updateProfile,
+  getAllUsers,
+  approveUser,
+  rejectUser,
+  deleteUser,
+  updateUser
 } = require('../controllers/authController');
 
 // Validation middleware
@@ -26,5 +31,10 @@ router.post('/login', login);
 router.post('/logout', logout);
 router.get('/profile', auth, getProfile);
 router.put('/profile', auth, upload.single('profileImage'), updateProfile);
+router.get('/test-users', getAllUsers); // Test endpoint to check users
+router.put('/approve/:id', approveUser); // Approve user
+router.delete('/reject/:id', rejectUser); // Reject user
+router.delete('/user/:id', deleteUser); // Delete user
+router.put('/user/:id', updateUser); // Update user
 
 module.exports = router;

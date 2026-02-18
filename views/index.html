@@ -5,39 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cultural Community - Home</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
+    <header class="header" id="header">
         <nav class="nav-container">
-            <a href="/" class="logo">
-                <img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img">
-            </a>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="/" class="active" data-i18n="home">Home</a></li>
                 <li><a href="/about" data-i18n="about">About</a></li>
                 <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                <li><a href="/articles" data-i18n="articles">Articles</a></li>
                 <li><a href="/members" data-i18n="members">Members</a></li>
                 <li><a href="/events" data-i18n="events">Events</a></li>
                 <li><a href="/contact" data-i18n="contact">Contact</a></li>
             </ul>
             <div class="auth-buttons">
-                <button id="lang-btn" class="btn btn-outline" onclick="toggleLang()">EN</button>
-                <a href="/login" class="btn btn-outline" data-i18n="login">Login</a>
-                <a href="/register" class="btn btn-solid" data-i18n="join">Join</a>
+                <div class="dropdown">
+                    <button class="btn btn-icon dropdown-toggle" onclick="toggleDropdown()">⋮</button>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <a href="/login" data-i18n="login">Login</a>
+                        <a href="/register" data-i18n="join">Join</a>
+                    </div>
+                </div>
+                <button id="lang-btn" class="btn btn-icon" onclick="toggleLang()" title="Change Language">🌍</button>
             </div>
         </nav>
     </header>
 
     <section class="hero" id="hero-section">
         <div class="hero-content">
-            <h1 data-i18n="heroTitle">Welcome to Our Tajpuriya Cultural Heritage</h1>
-            <p data-i18n="heroSubtitle">Preserving traditions, connecting communities, and celebrating our rich cultural legacy for future generations.</p>
-            <a href="/about" class="btn btn-primary" data-i18n="learnMore">Learn More</a>
+            <div class="hero-text">
+                <h1 data-i18n="heroTitle">Welcome to Our Tajpuriya Cultural Heritage</h1>
+                <p data-i18n="heroSubtitle">Preserving traditions, connecting communities, and celebrating our rich cultural legacy for future generations.</p>
+                <a href="/about" class="btn btn-primary" data-i18n="learnMore">Learn More</a>
+            </div>
+            <div class="hero-image">
+                <img src="/images/hukkale.png" alt="Tajpuriya Samaj" class="hero-logo">
+            </div>
         </div>
     </section>
 
@@ -83,12 +90,24 @@
             </div>
         </section>
 
-        <section class="section pattern-bg" style="padding: 4rem 2rem; border-radius: 12px; text-align: center;">
-            <h2 class="section-title" data-i18n="joinCommunity" style="color: white;">Join Our Community</h2>
-            <p data-i18n="joinCommunityDesc" style="color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 2rem;">
+        <section class="section slogan-section">
+            <div class="slogan-content">
+                <div class="slogan-image-circle">
+                    <img src="/images/hukkale.png" alt="Tajpuriya Samaj" class="slogan-logo-circle">
+                </div>
+                <div class="slogan-text">
+                    <h2 class="slogan-title">Tajpuriya <span style="color: #EF4444;">Samaj</span></h2>
+                    <p class="slogan-tagline">Unity in Heritage, Strength in Togetherness</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section pattern-bg" style="padding: 5rem 2rem; border-radius: 30px; text-align: center; position: relative; z-index: 1;">
+            <h2 class="section-title" data-i18n="joinCommunity" style="color: white; margin-bottom: 1.5rem;">Join Our Community</h2>
+            <p data-i18n="joinCommunityDesc" style="color: rgba(255,255,255,0.95); font-size: 1.3rem; margin-bottom: 2.5rem; font-weight: 500;">
                 Become part of our growing community and help preserve our cultural heritage for future generations.
             </p>
-            <a href="/register" class="btn btn-primary" data-i18n="registerNow" style="background: white; color: var(--text-dark);">Register Now</a>
+            <a href="/register" class="btn btn-primary" data-i18n="registerNow" style="background: white; color: var(--primary-color); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">Register Now</a>
         </section>
     </main>
 
@@ -106,6 +125,7 @@
                     <ul class="footer-links">
                         <li><a href="/about" data-i18n="about">About</a></li>
                         <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                        <li><a href="/articles" data-i18n="articles">Articles</a></li>
                         <li><a href="/members" data-i18n="members">Members</a></li>
                         <li><a href="/events" data-i18n="events">Events</a></li>
                         <li><a href="/contact" data-i18n="contact">Contact</a></li>
@@ -121,11 +141,21 @@
 
     <script src="/js/i18n-data.js"></script>
     <script src="/js/translations.js"></script>
+    <script src="/js/effects.js"></script>
+    <script src="/js/auth-nav.js"></script>
     <script src="/js/main.js"></script>
     <script>
-function toggleMobileMenu() {
-    const navMenu = document.getElementById('nav-menu');
-    navMenu.classList.toggle('active');
+function toggleDropdown() {
+    document.getElementById('dropdown-menu').classList.toggle('show');
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-toggle')) {
+        const dropdowns = document.getElementsByClassName('dropdown-menu');
+        for (let i = 0; i < dropdowns.length; i++) {
+            dropdowns[i].classList.remove('show');
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {

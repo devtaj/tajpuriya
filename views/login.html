@@ -7,19 +7,26 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header" id="header">
         <nav class="nav-container">
-            <a href="/" class="logo"><img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img"></a>
-            <ul class="nav-menu">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/culture">Culture</a></li>
-                <li><a href="/members">Members</a></li>
-                <li><a href="/events">Events</a></li>
-                <li><a href="/contact">Contact</a></li>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" data-i18n="home">Home</a></li>
+                <li><a href="/about" data-i18n="about">About</a></li>
+                <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                <li><a href="/articles" data-i18n="articles">Articles</a></li>
+                <li><a href="/members" data-i18n="members">Members</a></li>
+                <li><a href="/events" data-i18n="events">Events</a></li>
+                <li><a href="/contact" data-i18n="contact">Contact</a></li>
             </ul>
             <div class="auth-buttons">
-                <a href="/register" class="btn btn-primary">Join Us</a>
+                <div class="dropdown">
+                    <button class="btn btn-icon dropdown-toggle" onclick="toggleDropdown()">⋮</button>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <a href="/login" class="active" data-i18n="login">Login</a>
+                        <a href="/register" data-i18n="join">Join</a>
+                    </div>
+                </div>
+                <button id="lang-btn" class="btn btn-icon" onclick="toggleLang()" title="Change Language">🌍</button>
             </div>
         </nav>
     </header>
@@ -81,17 +88,88 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-links">
-                <a href="/about">About</a>
-                <a href="/culture">Culture</a>
-                <a href="/members">Members</a>
-                <a href="/events">Events</a>
-                <a href="/contact">Contact</a>
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3 data-i18n="about">About</h3>
+                    <p data-i18n="footerAboutDesc">Preserving our cultural heritage and connecting community members worldwide.</p>
+                    <p data-i18n="footerConnectDesc" style="margin-top: 1rem;">Join our community and stay updated with events and news.</p>
+                    <a href="/register" class="btn btn-outline" data-i18n="join" style="margin-top: 1rem; display: inline-block; color: white; border-color: white;">Join</a>
+                </div>
+                <div class="footer-section">
+                    <h3 data-i18n="footerQuickLinks">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about" data-i18n="about">About</a></li>
+                        <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                        <li><a href="/articles" data-i18n="articles">Articles</a></li>
+                        <li><a href="/members" data-i18n="members">Members</a></li>
+                        <li><a href="/events" data-i18n="events">Events</a></li>
+                        <li><a href="/contact" data-i18n="contact">Contact</a></li>
+                    </ul>
+                </div>
             </div>
-            <p>&copy; 2024 Cultural Community. All rights reserved.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 <span data-i18n="footerRights">Tajpuriya Samaj. All rights reserved.</span></p>
+                <p><span data-i18n="footerDeveloper">Developed by</span> <a href="https://devtaj.github.io/dev/" target="_blank">Dev Tajpuriya</a></p>
+            </div>
         </div>
     </footer>
 
+    <script src="/js/i18n-data.js"></script>
+    <script src="/js/translations.js"></script>
+    <script src="/js/effects.js"></script>
     <script src="/js/main.js"></script>
+    <script>
+function toggleDropdown() {
+    document.getElementById('dropdown-menu').classList.toggle('show');
+}
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-toggle')) {
+        const dropdowns = document.getElementsByClassName('dropdown-menu');
+        for (let i = 0; i < dropdowns.length; i++) {
+            dropdowns[i].classList.remove('show');
+        }
+    }
+}
+
+// Handle login form submission
+document.getElementById('login-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Logging in...';
+    
+    const formData = {
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
+    };
+    
+    try {
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+            // Store user data in localStorage
+            localStorage.setItem('user', JSON.stringify(result.user));
+            alert('Login successful!');
+            window.location.href = '/';
+        } else {
+            alert(result.message || 'Login failed. Please check your credentials.');
+        }
+    } catch (error) {
+        alert('An error occurred. Please try again.');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Login';
+    }
+});
+    </script>
 </body>
 </html>
