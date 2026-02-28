@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Tajpuriya Samaj</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         .admin-container {
             max-width: 1400px;
@@ -273,20 +277,27 @@
     </style>
 </head>
 <body>
-    <header class="header">
+    <header class="header" id="header">
         <nav class="nav-container">
-            <a href="/" class="logo"><img src="/images/tajpuriyasamajlogo.png" alt="Tajpuriya Samaj" class="logo-img"></a>
-            <ul class="nav-menu">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/culture">Culture</a></li>
-                <li><a href="/members">Members</a></li>
-                <li><a href="/events">Events</a></li>
-                <li><a href="/contact">Contact</a></li>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" data-i18n="home">Home</a></li>
+                <li><a href="/about" data-i18n="about">About</a></li>
+                <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                <li><a href="/articles" data-i18n="articles">Articles</a></li>
+                <li><a href="/members" data-i18n="members">Members</a></li>
+                <li><a href="/events" data-i18n="events">Events</a></li>
+                <li><a href="/contact" data-i18n="contact">Contact</a></li>
             </ul>
             <div class="auth-buttons">
-                <span>Admin Panel</span>
-                <button class="btn btn-secondary" onclick="app.logout()">Logout</button>
+                <div class="dropdown">
+                    <button class="btn btn-icon dropdown-toggle" onclick="toggleDropdown()">⋮</button>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <span style="padding: 0.75rem 1rem; display: block; color: var(--primary-color); font-weight: 600; border-bottom: 1px solid #eee;">Admin Panel</span>
+                        <a href="#" onclick="adminLogout(); return false;">Logout</a>
+                    </div>
+                </div>
+                <button id="lang-btn" class="btn btn-icon" onclick="toggleLang()" title="Change Language">🌍</button>
             </div>
         </nav>
     </header>
@@ -350,14 +361,29 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-links">
-                <a href="/about">About</a>
-                <a href="/culture">Culture</a>
-                <a href="/members">Members</a>
-                <a href="/events">Events</a>
-                <a href="/contact">Contact</a>
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3 data-i18n="about">About</h3>
+                    <p data-i18n="footerAboutDesc">Preserving our cultural heritage and connecting community members worldwide.</p>
+                    <p data-i18n="footerConnectDesc" style="margin-top: 1rem;">Join our community and stay updated with events and news.</p>
+                    <a href="/register" class="btn btn-outline" data-i18n="join" style="margin-top: 1rem; display: inline-block; color: white; border-color: white;">Join</a>
+                </div>
+                <div class="footer-section">
+                    <h3 data-i18n="footerQuickLinks">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about" data-i18n="about">About</a></li>
+                        <li><a href="/culture" data-i18n="culture">Culture</a></li>
+                        <li><a href="/articles" data-i18n="articles">Articles</a></li>
+                        <li><a href="/members" data-i18n="members">Members</a></li>
+                        <li><a href="/events" data-i18n="events">Events</a></li>
+                        <li><a href="/contact" data-i18n="contact">Contact</a></li>
+                    </ul>
+                </div>
             </div>
-            <p>&copy; 2024 Tajpuriya Samaj. All rights reserved.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 <span data-i18n="footerRights">Tajpuriya Samaj. All rights reserved.</span></p>
+                <p><span data-i18n="footerDeveloper">Developed by</span> <a href="https://devtaj.github.io/dev/" target="_blank">Dev Tajpuriya</a></p>
+            </div>
         </div>
     </footer>
 
@@ -512,8 +538,31 @@
         </div>
     </div>
 
+    <script src="/js/i18n-data.js"></script>
+    <script src="/js/translations.js"></script>
+    <script src="/js/effects.js"></script>
+    <script src="/js/auth-nav.js"></script>
+    <script src="/js/nav.js"></script>
     <script src="/js/main.js"></script>
     <script>
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-toggle')) {
+        const dropdowns = document.getElementsByClassName('dropdown-menu');
+        for (let i = 0; i < dropdowns.length; i++) {
+            dropdowns[i].classList.remove('show');
+        }
+    }
+}
+
+
+        function adminLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('admin');
+                window.location.href = '/admin-login';
+            }
+        }
+        
         function showCreateEventForm() {
             document.getElementById('event-modal').style.display = 'block';
         }
@@ -773,6 +822,13 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Check if admin is logged in
+            const admin = JSON.parse(localStorage.getItem('admin') || 'null');
+            if (!admin) {
+                window.location.href = '/admin-login';
+                return;
+            }
+            
             loadAdminStats();
             loadAllUsers();
             loadPendingPosts();

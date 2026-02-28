@@ -1,0 +1,27 @@
+<!-- MOBILE-RESPONSIVE NAVIGATION - Copy this to replace <nav class="nav-container"> in all HTML files -->
+<nav class="nav-container">
+    <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    <ul class="nav-menu" id="nav-menu">
+        <li><a href="/" data-i18n="home">Home</a></li>
+        <li><a href="/about" data-i18n="about">About</a></li>
+        <li><a href="/culture" data-i18n="culture">Culture</a></li>
+        <li><a href="/articles" data-i18n="articles">Articles</a></li>
+        <li><a href="/members" data-i18n="members">Members</a></li>
+        <li><a href="/events" data-i18n="events">Events</a></li>
+        <li><a href="/contact" data-i18n="contact">Contact</a></li>
+    </ul>
+    <div class="auth-buttons">
+        <div class="dropdown">
+            <button class="btn btn-icon dropdown-toggle" onclick="toggleDropdown()">⋮</button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="/login" data-i18n="login">Login</a>
+                <a href="/register" data-i18n="join">Join</a>
+            </div>
+        </div>
+        <button id="lang-btn" class="btn btn-icon" onclick="toggleLang()" title="Change Language">🌍</button>
+    </div>
+</nav>
+
+<!-- SCRIPTS - Add nav.js before main.js -->
+<script src="/js/nav.js"></script>
+<script src="/js/main.js"></script>

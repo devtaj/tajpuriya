@@ -34,6 +34,9 @@
     <main class="container">
         <section class="section">
             <h1 class="section-title">Member Login</h1>
+            <div id="admin-notice" style="display: none; background: #FEF3C7; border: 2px solid #F59E0B; padding: 1rem; border-radius: 10px; margin-bottom: 2rem; text-align: center;">
+                <p style="margin: 0; color: #92400E; font-weight: 600;">⚠️ Admin Access Required - Please login with admin credentials</p>
+            </div>
             
             <div class="form-container">
                 <form id="login-form">
@@ -119,6 +122,13 @@
     <script src="/js/effects.js"></script>
     <script src="/js/main.js"></script>
     <script>
+const urlParams = new URLSearchParams(window.location.search);
+const redirect = urlParams.get('redirect');
+
+if (redirect === '/admin') {
+    document.getElementById('admin-notice').style.display = 'block';
+}
+
 function toggleDropdown() {
     document.getElementById('dropdown-menu').classList.toggle('show');
 }
@@ -156,10 +166,20 @@ document.getElementById('login-form').addEventListener('submit', async function(
         const result = await response.json();
         
         if (response.ok) {
-            // Store user data in localStorage
             localStorage.setItem('user', JSON.stringify(result.user));
-            alert('Login successful!');
-            window.location.href = '/';
+            
+            if (redirect === '/admin') {
+                if (result.user.role === 'admin') {
+                    alert('Admin login successful!');
+                    window.location.href = '/admin';
+                } else {
+                    alert('Access denied. Admin privileges required.');
+                    localStorage.removeItem('user');
+                }
+            } else {
+                alert('Login successful!');
+                window.location.href = redirect || '/';
+            }
         } else {
             alert(result.message || 'Login failed. Please check your credentials.');
         }

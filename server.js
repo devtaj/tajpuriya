@@ -33,6 +33,7 @@ mongoose.connect(MONGODB_URI, {
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/admin', require('./routes/admin'));
 app.use('/api/members', require('./routes/members'));
 app.use('/api/events', require('./routes/events'));
 app.use('/api/posts', require('./routes/posts'));
@@ -76,6 +77,14 @@ app.get('/register', (req, res) => {
 
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'admin.html'));
+});
+
+app.get('/admin-login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'admin-login.html'));
+});
+
+app.get('/admin-register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'admin-register.html'));
 });
 
 app.get('/submit-article', (req, res) => {

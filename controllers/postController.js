@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const Contact = require('../models/Contact');
+const User = require('../models/User');
 
 const getPosts = async (req, res) => {
   try {
@@ -187,7 +188,7 @@ const approvePost = async (req, res) => {
 
 const likePost = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate('author', 'name');
     if (!post) return res.status(404).json({ message: 'Post not found' });
     
     const userId = req.user.id;

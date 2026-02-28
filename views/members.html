@@ -41,7 +41,7 @@
                     <div class="stat-label" data-i18n="totalMembers">Total Members</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="board-members">${boardMembers.length}</div>
+                    <div class="stat-number" id="board-members">0</div>
                     <div class="stat-label" data-i18n="boardMembers">Board Members</div>
                 </div>
                 <div class="stat-card">
@@ -66,33 +66,6 @@
                     <div class="filter-group">
                         <label for="search" data-i18n="searchMembers">Search Members:</label>
                         <input type="text" id="search" class="form-control" data-i18n-placeholder="searchPlaceholder" placeholder="Search by name or profession...">
-                    </div>
-                    <div class="filter-group">
-                        <label for="profession-filter" data-i18n="professionLabel">Profession:</label>
-                        <select id="profession-filter" class="form-control filter-select">
-                            <option value="" data-i18n="allProfessions">All Professions</option>
-                            <option value="doctor" data-i18n="doctor">Doctor</option>
-                            <option value="engineer" data-i18n="engineer">Engineer</option>
-                            <option value="teacher" data-i18n="teacher">Teacher</option>
-                            <option value="business" data-i18n="business">Business</option>
-                            <option value="lawyer" data-i18n="lawyer">Lawyer</option>
-                            <option value="student" data-i18n="student">Student</option>
-                            <option value="other" data-i18n="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="city-filter" data-i18n="cityLabel">City:</label>
-                        <select id="city-filter" class="form-control filter-select">
-                            <option value="" data-i18n="allCities">All Cities</option>
-                            <option value="mumbai" data-i18n="mumbai">Mumbai</option>
-                            <option value="delhi" data-i18n="delhi">Delhi</option>
-                            <option value="bangalore" data-i18n="bangalore">Bangalore</option>
-                            <option value="pune" data-i18n="pune">Pune</option>
-                            <option value="hyderabad" data-i18n="hyderabad">Hyderabad</option>
-                            <option value="chennai" data-i18n="chennai">Chennai</option>
-                            <option value="kolkata" data-i18n="kolkata">Kolkata</option>
-                            <option value="other" data-i18n="other">Other</option>
-                        </select>
                     </div>
                 </div>
             </div>
@@ -186,6 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const approvedMembers = allMembers.filter(member => member.isApproved === true);
         
         // Update stats
+        document.getElementById('board-members').textContent = boardMembers.length;
         document.getElementById('total-members').textContent = approvedMembers.length + boardMembers.length;
         document.getElementById('general-members').textContent = approvedMembers.length;
         
@@ -194,30 +168,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         // Filter functionality
         const searchInput = document.getElementById('search');
-        const professionFilter = document.getElementById('profession-filter');
-        const cityFilter = document.getElementById('city-filter');
         
         function filterMembers() {
             const searchTerm = searchInput.value.toLowerCase();
-            const profession = professionFilter.value.toLowerCase();
-            const city = cityFilter.value.toLowerCase();
             
             const filtered = approvedMembers.filter(member => {
-                const matchSearch = !searchTerm || 
-                    member.name.toLowerCase().includes(searchTerm) ||
-                    member.profession.toLowerCase().includes(searchTerm);
-                const matchProfession = !profession || member.profession.toLowerCase().includes(profession);
-                const matchCity = !city || member.address?.street?.toLowerCase().includes(city);
-                
-                return matchSearch && matchProfession && matchCity;
+                return member.name.toLowerCase().includes(searchTerm) ||
+                       member.profession.toLowerCase().includes(searchTerm);
             });
             
             displayGeneralMembers(filtered);
         }
         
         searchInput.addEventListener('input', filterMembers);
-        professionFilter.addEventListener('change', filterMembers);
-        cityFilter.addEventListener('change', filterMembers);
         
     } catch (error) {
         console.error('Error loading members:', error);

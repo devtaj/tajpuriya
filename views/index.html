@@ -13,6 +13,7 @@
 <body>
     <header class="header" id="header">
         <nav class="nav-container">
+            <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="/" class="active" data-i18n="home">Home</a></li>
                 <li><a href="/about" data-i18n="about">About</a></li>
@@ -143,11 +144,9 @@
     <script src="/js/translations.js"></script>
     <script src="/js/effects.js"></script>
     <script src="/js/auth-nav.js"></script>
+    <script src="/js/nav.js"></script>
     <script src="/js/main.js"></script>
     <script>
-function toggleDropdown() {
-    document.getElementById('dropdown-menu').classList.toggle('show');
-}
 
 window.onclick = function(event) {
     if (!event.target.matches('.dropdown-toggle')) {
